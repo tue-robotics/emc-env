@@ -54,6 +54,9 @@ then
     rosdep update
 fi
 
+# Source ROS
+source /opt/ros/$EMC_ROS_DISTRO/setup.bash
+
 _make_sure_installed g++ git
 
 # Install EMC framework
