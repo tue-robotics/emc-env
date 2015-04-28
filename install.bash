@@ -7,7 +7,7 @@ then
     sudo apt-get install git
 fi
 
-# Update the installer / updater
+# Install / update the installer / updater
 if [ ! -d $EMC_ENV_DIR ]
 then
     git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
@@ -16,7 +16,10 @@ else
 fi
 
 # Source the updated environment
-source $EMC_DIR/env/setup.bash
+source $EMC_ENV_DIR/setup.bash
+
+# Add sourcing the environment to ~/.bashrc (if not already there)
+! grep 'Source the EMC environment' ~/.bashrc -q && echo -e "\n# Source the EMC environment\nsource $EMC_ENV_DIR/setup.bash" >> ~/.bashrc
 
 # Run the installer / updater
 emc-update
