@@ -33,5 +33,5 @@ function emc-update
     $EMC_ENV_DIR/setup/emc-update-impl.bash
 
     # Source the updated environment
-    source $EMC_DIR/setup.bash
+    source $EMC_ENV_DIR/setup.bash
 }
