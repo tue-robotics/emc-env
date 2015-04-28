@@ -15,8 +15,8 @@ else
     git -C $EMC_ENV_DIR pull
 fi
 
-# Run the installer / updater
-$EMC_ENV_DIR/setup/emc-update-impl.bash
-
 # Source the updated environment
 source $EMC_DIR/env/setup.bash
+
+# Run the installer / updater
+emc-update

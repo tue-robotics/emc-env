@@ -1,5 +1,5 @@
-export EMC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export EMC_ENV_DIR=$EMC_DIR/env
+export EMC_ENV_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export EMC_DIR=$EMC_ENV_DIR/..
 
 # --------------------------------------------------------------------------------
 
