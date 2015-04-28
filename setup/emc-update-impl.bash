@@ -80,3 +80,7 @@ _make_sure_installed ros-$EMC_ROS_DISTRO-cv-bridge ros-$EMC_ROS_DISTRO-tf libass
 
 # 4) Compile
 catkin_make --directory $EMC_SYSTEM_DIR
+
+# 5) Install the libraries
+sudo cp $EMC_SYSTEM_DIR/devel/lib/libemc_system.so /usr/lib/emc-framework.so
+sudo cp $EMC_SYSTEM_DIR/src/emc_system/include/emc /usr/include/ -r
