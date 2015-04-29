@@ -35,3 +35,9 @@ function emc-update
     # Source the updated environment
     source $EMC_ENV_DIR/setup.bash
 }
+
+# --------------------------------------------------------------------------------
+
+alias emc-sim='rosrun emc_simulator pico_simulator'
+alias pico-teleop='rosrun emc_simulator teleop.py'
+alias emc-viz='rosrun emc_system emc_viz'
