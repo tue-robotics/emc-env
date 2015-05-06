@@ -43,3 +43,6 @@ function emc-update
 alias emc-sim='rosrun emc_simulator pico_simulator'
 alias pico-teleop='rosrun emc_simulator teleop.py'
 alias emc-viz='rosrun emc_system emc_viz'
+
+alias taco-core='export ROS_MASTER_URI=http://192.168.2.82:11311' 
+alias pico-core='export ROS_MASTER_URI=http://192.168.2.81:11311'
