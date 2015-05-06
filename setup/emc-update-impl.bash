@@ -31,7 +31,7 @@ function _git_clone_or_update
     then
         git clone $repo_url $dest
     else
-        git -C $dest pull
+        git --git-dir=$dest/.git --work-tree=$dest pull
     fi    
 }
 

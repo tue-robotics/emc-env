@@ -4,7 +4,9 @@ export EMC_DIR=$EMC_ENV_DIR/..
 # --------------------------------------------------------------------------------
 
 export EMC_SYSTEM_DIR=$EMC_DIR/system
-export EMC_ROS_DISTRO=indigo
+
+# Default ROS distro is indigo
+[ -n "$EMC_ROS_DISTRO" ] || export EMC_ROS_DISTRO=indigo
 
 if [ -f $EMC_SYSTEM_DIR/devel/setup.bash ]
 then
@@ -26,7 +28,7 @@ function emc-update
     then
         git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
     else
-        git -C $EMC_ENV_DIR pull
+        git --git-dir=$EMC_ENV_DIR/.git --work-tree=$EMC_ENV_DIR  pull
     fi
 
     # Run the installer / updater
