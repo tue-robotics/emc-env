@@ -76,7 +76,7 @@ _git_clone_or_update https://github.com/tue-robotics/geolib2 $EMC_SYSTEM_DIR/src
 _git_clone_or_update https://github.com/tue-robotics/code_profiler $EMC_SYSTEM_DIR/src/code_profiler
 
 # 3) Install dependencies
-_make_sure_installed ros-$EMC_ROS_DISTRO-cv-bridge ros-$EMC_ROS_DISTRO-tf libassimp-dev ros-$EMC_ROS_DISTRO-message-runtime ros-$EMC_ROS_DISTRO-message-generation ros-$EMC_ROS_DISTRO-roscpp
+_make_sure_installed ros-$EMC_ROS_DISTRO-cv-bridge ros-$EMC_ROS_DISTRO-tf libassimp-dev ros-$EMC_ROS_DISTRO-message-runtime ros-$EMC_ROS_DISTRO-message-generation ros-$EMC_ROS_DISTRO-roscpp ros-$EMC_ROS_DISTRO-nav-msgs
 
 # 4) Compile
 catkin_make --directory $EMC_SYSTEM_DIR
