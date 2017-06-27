@@ -6,7 +6,7 @@ export EMC_DIR=$EMC_ENV_DIR/..
 export EMC_SYSTEM_DIR=$EMC_DIR/system
 
 # Default ROS distro is indigo
-[ -n "$EMC_ROS_DISTRO" ] || export EMC_ROS_DISTRO=indigo
+[ -n "$EMC_ROS_DISTRO" ] || export EMC_ROS_DISTRO=kinetic
 
 if [ -f $EMC_SYSTEM_DIR/devel/setup.bash ]
 then
