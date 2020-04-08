@@ -44,6 +44,9 @@ alias emc-sim='rosrun emc_simulator pico_simulator'
 alias pico-teleop='rosrun emc_simulator teleop.py'
 alias emc-viz='rosrun emc_system emc_viz'
 
+alias mrc-sim='rosrun emc_simulator pico_simulator'
+alias mrc-viz='rosrun emc_system emc_viz'
+
 alias pico-core='export ROS_MASTER_URI=http://192.168.44.253:11311'
 alias taco-core='export ROS_MASTER_URI=http://192.168.44.82:11311' 
 alias sshpico='ssh emc@192.168.44.253'
