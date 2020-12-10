@@ -5,8 +5,35 @@ export EMC_DIR=$EMC_ENV_DIR/..
 
 export EMC_SYSTEM_DIR=$EMC_DIR/system
 
-# Default ROS distro is indigo
-[ -n "$EMC_ROS_DISTRO" ] || export EMC_ROS_DISTRO=kinetic
+if [ -z "$EMC_ROS_DISTRO" ]
+then
+    source /etc/lsb-release
+
+    if [ "$DISTRIB_ID" != "Ubuntu" ]
+    then
+        echo "[emc-env] Unsupported OS $DISTRIB_ID. Use Ubuntu."
+        exit 1
+    fi
+
+    # Set ROS version
+    case $DISTRIB_RELEASE in
+        "16.04")
+            EMC_ROS_DISTRO=kinetic
+            ;;
+        "18.04")
+            EMC_ROS_DISTRO=melodic
+            ;;
+        "20.04")
+            EMC_ROS_DISTRO=noetic
+            ;;
+        *)
+            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use either 16.04, 18.04 or 20.04"
+            exit 1
+            ;;
+    esac
+fi
+
+export EMC_ROS_DISTRO
 
 if [ -f $EMC_SYSTEM_DIR/devel/setup.bash ]
 then
