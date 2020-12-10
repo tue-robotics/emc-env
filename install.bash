@@ -8,9 +8,13 @@ then
 fi
 
 # Install / update the installer / updater
-if [ ! -d $EMC_ENV_DIR ]
+if [[ ! -d $EMC_ENV_DIR ]] && [[ -z "$CI" ]]
 then
     git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
+elif [[ -n "$CI" ]]
+then
+    mkdir -p $EMC_DIR
+    cp -r . $EMC_ENV_DIR
 else
     git -C $EMC_ENV_DIR pull
 fi
