@@ -55,7 +55,7 @@ function emc-update
     then
         git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
     else
-        git --git-dir=$EMC_ENV_DIR/.git --work-tree=$EMC_ENV_DIR  pull
+        git -C $EMC_ENV_DIR  pull
     fi
 
     # Run the installer / updater
