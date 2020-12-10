@@ -38,12 +38,12 @@ export EMC_ROS_DISTRO
 if [ -f $EMC_SYSTEM_DIR/devel/setup.bash ]
 then
     source $EMC_SYSTEM_DIR/devel/setup.bash
-fi 
+fi
 
 # --------------------------------------------------------------------------------
 
 function emc-update
-{  
+{
     if ! dpkg -s git &> /dev/null
     then
         echo "Going to install git"
@@ -76,6 +76,6 @@ alias mrc-viz='rosrun emc_system emc_viz'
 alias mrc-update=emc-update
 
 alias pico-core='export ROS_MASTER_URI=http://192.168.44.253:11311'
-alias taco-core='export ROS_MASTER_URI=http://192.168.44.82:11311' 
+alias taco-core='export ROS_MASTER_URI=http://192.168.44.82:11311'
 alias sshpico='ssh emc@192.168.44.253'
 alias sshtaco='ssh emc@192.168.44.82'
