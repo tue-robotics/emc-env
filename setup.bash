@@ -19,12 +19,15 @@ then
     case $DISTRIB_RELEASE in
         "16.04")
             EMC_ROS_DISTRO=kinetic
+            echo "[emc-env] Detected ubuntu 16.04, using ROS Kinetic"
             ;;
         "18.04")
             EMC_ROS_DISTRO=melodic
+            echo "[emc-env] Detected ubuntu 18.04, using ROS Melodic"
             ;;
         "20.04")
             EMC_ROS_DISTRO=noetic
+            echo "[emc-env] Detected ubuntu 20.04, using ROS Noetic"
             ;;
         *)
             echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use either 16.04, 18.04 or 20.04"
@@ -50,12 +53,15 @@ function emc-update
         sudo apt-get install git
     fi
 
-    # Update the installer / updater
-    if [ ! -d $EMC_ENV_DIR ]
+    # Update the installer / updater if not in CI
+    if [[ -z "$CI" ]]
     then
-        git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
-    else
-        git -C $EMC_ENV_DIR  pull
+        if [[ ! -d $EMC_ENV_DIR ]]
+        then
+            git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
+        else
+            git -C $EMC_ENV_DIR pull
+        fi
     fi
 
     # Run the installer / updater
