@@ -1,6 +1,0 @@
-os: linux
-dist: xenial
-language: cpp
-
-script:
-  - source install.bash
