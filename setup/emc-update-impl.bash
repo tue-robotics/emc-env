@@ -76,7 +76,7 @@ then
     then
         pv=3
     fi
-    sudo apt-get install -y ros-"$EMC_ROS_DISTRO"-ros cmake python${pv}-catkin-pkg python${pv}-empy python${pv}-nose python${pv}-setuptools libgtest-dev build-essential
+    sudo apt-get install -y ros-"$EMC_ROS_DISTRO"-ros-base cmake python${pv}-catkin-pkg python${pv}-empy python${pv}-nose python${pv}-rosdep python${pv}-setuptools libgtest-dev build-essential
 
     if [ ! -d /etc/ros/rosdep ]
     then
