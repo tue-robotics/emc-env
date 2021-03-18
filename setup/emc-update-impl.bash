@@ -76,9 +76,12 @@ then
     then
         pv=3
     fi
-    sudo apt-get install -y ros-"$EMC_ROS_DISTRO"-ros-base cmake python${pv}-catkin-pkg python${pv}-empy python${pv}-nose python${pv}-setuptools libgtest-dev build-essential
+    sudo apt-get install -y ros-"$EMC_ROS_DISTRO"-ros cmake python${pv}-catkin-pkg python${pv}-empy python${pv}-nose python${pv}-setuptools libgtest-dev build-essential
 
-    sudo rosdep init || true # make sure it always succeeds, even if rosdep init was already called
+    if [ ! -d /etc/ros/rosdep ]
+    then
+        sudo rosdep init || true # make sure it always succeeds, even if rosdep init was already called
+    fi
 
     rosdep update
 fi
