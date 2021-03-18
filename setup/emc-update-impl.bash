@@ -72,7 +72,7 @@ then
     sudo apt-get update
 
     # Install basic ROS packages. All other packages will be installed using tue-rosdep
-    if [ "$EMC_ROS_DISTRO" == noetic ]
+    if [ "$EMC_ROS_DISTRO" != kinetic ] && [ "$EMC_ROS_DISTRO" != melodic ]
     then
         pv=3
     fi
