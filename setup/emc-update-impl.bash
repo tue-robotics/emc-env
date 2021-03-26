@@ -47,7 +47,7 @@ then
     sudo apt-get update
 
     # Install basic ROS packages. All other packages will be installed using tue-rosdep
-    sudo apt-get install -y ros-$EMC_ROS_DISTRO-ros-base cmake python-catkin-pkg python-empy python-nose python-setuptools libgtest-dev build-essential
+    sudo apt-get install -y ros-$EMC_ROS_DISTRO-ros-base cmake python-catkin-pkg python-empy python-nose python-setuptools libgtest-dev build-essential ros-$EMC_ROS_DISTRO-rosbash ros-$EMC_ROS_DISTRO-catkin
 
     sudo rosdep init || true # make sure it always succeeds, even if rosdep init was already called
 
