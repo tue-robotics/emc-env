@@ -75,6 +75,7 @@ function emc-update
 
 alias emc-sim='rosrun emc_simulator pico_simulator'
 alias pico-teleop='rosrun emc_simulator teleop.py'
+alias taco-teleop='rosrun emc_simulator teleop.py taco'
 alias emc-viz='rosrun emc_system emc_viz'
 
 alias mrc-sim='rosrun emc_simulator pico_simulator'
