@@ -86,3 +86,7 @@ alias pico-core='export ROS_MASTER_URI=http://192.168.44.253:11311'
 alias taco-core='export ROS_MASTER_URI=http://192.168.44.82:11311'
 alias sshpico='ssh emc@192.168.44.253'
 alias sshtaco='ssh emc@192.168.44.82'
+
+if [ "$ROBOT_REAL" = true ] ; then
+  alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
+fi

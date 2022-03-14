@@ -108,6 +108,10 @@ _git_clone_or_update https://github.com/tue-robotics/emc_system "$EMC_SYSTEM_DIR
 _git_clone_or_update https://github.com/tue-robotics/emc_simulator "$EMC_SYSTEM_DIR"/src/emc_simulator
 _git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2
 _git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
+# Robot specific packages
+if [ "$ROBOT_REAL" = true ] ; then
+  _git_clone_or_update https://github.com/tue-robotics/mrc_hero_bringup "$EMC_SYSTEM_DIR"/src/mrc_hero_bringup
+fi
 
 # 3) Install dependencies
 _make_sure_installed ros-"$EMC_ROS_DISTRO"-cv-bridge ros-"$EMC_ROS_DISTRO"-tf libassimp-dev ros-"$EMC_ROS_DISTRO"-message-runtime ros-"$EMC_ROS_DISTRO"-message-generation ros-"$EMC_ROS_DISTRO"-roscpp ros-"$EMC_ROS_DISTRO"-nav-msgs ros-"$EMC_ROS_DISTRO"-shape-msgs
