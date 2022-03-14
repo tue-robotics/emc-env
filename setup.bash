@@ -73,20 +73,16 @@ function emc-update
 
 # --------------------------------------------------------------------------------
 
-alias emc-sim='rosrun emc_simulator pico_simulator'
-alias pico-teleop='rosrun emc_simulator teleop.py'
-alias taco-teleop='rosrun emc_simulator teleop.py taco'
-alias emc-viz='rosrun emc_system emc_viz'
+alias hero-teleop='rosrun emc_simulator teleop.py taco'
 
-alias mrc-sim='rosrun emc_simulator pico_simulator'
-alias mrc-viz='rosrun emc_system emc_viz'
 alias mrc-update=emc-update
 
-alias pico-core='export ROS_MASTER_URI=http://192.168.44.253:11311'
-alias taco-core='export ROS_MASTER_URI=http://192.168.44.82:11311'
-alias sshpico='ssh emc@192.168.44.253'
-alias sshtaco='ssh emc@192.168.44.82'
-
-if [ "$ROBOT_REAL" = true ] ; then
+if [ "$ROBOT_REAL" = true ] ;
+ then
   alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
+else
+  alias sshhero='ssh -A mrc@192.168.44.51'
+  alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
+  alias mrc-sim='rosrun emc_simulator pico_simulator'
+  alias mrc-viz='rosrun emc_system emc_viz'
 fi
