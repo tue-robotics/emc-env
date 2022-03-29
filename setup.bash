@@ -17,20 +17,12 @@ then
 
     # Set ROS version
     case $DISTRIB_RELEASE in
-        "16.04")
-            EMC_ROS_DISTRO=kinetic
-            echo "[emc-env] Detected ubuntu 16.04, using ROS Kinetic"
-            ;;
-        "18.04")
-            EMC_ROS_DISTRO=melodic
-            echo "[emc-env] Detected ubuntu 18.04, using ROS Melodic"
-            ;;
         "20.04")
             EMC_ROS_DISTRO=noetic
             echo "[emc-env] Detected ubuntu 20.04, using ROS Noetic"
             ;;
         *)
-            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use either 16.04, 18.04 or 20.04"
+            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use either 20.04, 20.04 or 20.04"
             exit 1
             ;;
     esac
