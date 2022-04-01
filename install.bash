@@ -7,6 +7,12 @@ then
     sudo apt-get install git
 fi
 
+if ! dpkg -s python-is-python3 &> /dev/null
+then
+    echo "Going to install python-is-python3"
+    sudo apt-get install python-is-python3
+fi
+
 # Install / update the installer / updater
 if [[ ! -d $EMC_ENV_DIR ]] && [[ -z "$CI" ]]
 then
