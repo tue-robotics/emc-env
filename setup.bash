@@ -17,20 +17,12 @@ then
 
     # Set ROS version
     case $DISTRIB_RELEASE in
-        "16.04")
-            EMC_ROS_DISTRO=kinetic
-            echo "[emc-env] Detected ubuntu 16.04, using ROS Kinetic"
-            ;;
-        "18.04")
-            EMC_ROS_DISTRO=melodic
-            echo "[emc-env] Detected ubuntu 18.04, using ROS Melodic"
-            ;;
         "20.04")
             EMC_ROS_DISTRO=noetic
             echo "[emc-env] Detected ubuntu 20.04, using ROS Noetic"
             ;;
         *)
-            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use either 16.04, 18.04 or 20.04"
+            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use either 20.04, 20.04 or 20.04"
             exit 1
             ;;
     esac
@@ -73,16 +65,16 @@ function emc-update
 
 # --------------------------------------------------------------------------------
 
-alias emc-sim='rosrun emc_simulator pico_simulator'
-alias pico-teleop='rosrun emc_simulator teleop.py'
-alias taco-teleop='rosrun emc_simulator teleop.py taco'
-alias emc-viz='rosrun emc_system emc_viz'
+alias hero-teleop='rosrun emc_simulator teleop.py taco'
 
-alias mrc-sim='rosrun emc_simulator pico_simulator'
-alias mrc-viz='rosrun emc_system emc_viz'
 alias mrc-update=emc-update
 
-alias pico-core='export ROS_MASTER_URI=http://192.168.44.253:11311'
-alias taco-core='export ROS_MASTER_URI=http://192.168.44.82:11311'
-alias sshpico='ssh emc@192.168.44.253'
-alias sshtaco='ssh emc@192.168.44.82'
+if [ "$ROBOT_REAL" = true ] ;
+ then
+  alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
+else
+  alias sshhero='ssh -A mrc@192.168.44.51'
+  alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
+  alias mrc-sim='rosrun emc_simulator pico_simulator'
+  alias mrc-viz='rosrun emc_system emc_viz'
+fi
