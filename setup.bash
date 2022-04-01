@@ -65,7 +65,7 @@ function emc-update
 
 # --------------------------------------------------------------------------------
 
-alias hero-teleop='rosrun emc_simulator teleop.py taco'
+alias hero-teleop='rosrun emc_simulator teleop.py hero'
 
 alias mrc-update=emc-update
 
