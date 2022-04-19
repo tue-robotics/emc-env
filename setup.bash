@@ -37,7 +37,7 @@ fi
 
 # --------------------------------------------------------------------------------
 
-function emc-update
+function mrc-update
 {
     if ! dpkg -s git &> /dev/null
     then
