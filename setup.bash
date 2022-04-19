@@ -66,6 +66,7 @@ function mrc-update
 # --------------------------------------------------------------------------------
 
 alias hero-teleop='rosrun emc_simulator teleop.py hero'
+alias hero-open-door='rostopic pub --once /hero/open_door std_msgs/Empty "{}"'
 
 alias mrc-update=emc-update
 
