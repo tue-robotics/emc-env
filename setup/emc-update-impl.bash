@@ -114,7 +114,7 @@ if [ "$ROBOT_REAL" = true ] ; then
 fi
 
 # 3) Install dependencies
-_make_sure_installed ros-"$EMC_ROS_DISTRO"-cv-bridge ros-"$EMC_ROS_DISTRO"-tf libassimp-dev ros-"$EMC_ROS_DISTRO"-message-runtime ros-"$EMC_ROS_DISTRO"-message-generation ros-"$EMC_ROS_DISTRO"-roscpp ros-"$EMC_ROS_DISTRO"-nav-msgs ros-"$EMC_ROS_DISTRO"-shape-msgs
+_make_sure_installed ros-"$EMC_ROS_DISTRO"-cv-bridge ros-"$EMC_ROS_DISTRO"-image-geometry ros-"$EMC_ROS_DISTRO"-tf libassimp-dev ros-"$EMC_ROS_DISTRO"-message-runtime ros-"$EMC_ROS_DISTRO"-message-generation ros-"$EMC_ROS_DISTRO"-roscpp ros-"$EMC_ROS_DISTRO"-nav-msgs ros-"$EMC_ROS_DISTRO"-shape-msgs
 
 # 4) Compile
 catkin_make --directory "$EMC_SYSTEM_DIR"
