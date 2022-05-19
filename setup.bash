@@ -76,7 +76,7 @@ if [ "$ROBOT_REAL" = true ] ;
   alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
   alias pyro-start='roslaunch rosbot_bringup start.launch'
 else
-  alias sshpyro='ssh -A husarion@192.168.44.51'
+  alias sshpyro='ssh -A husarion@192.168.44.122'
   alias sshhero='ssh -A mrc@192.168.44.51'
   alias pyro-core='export ROS_MASTER_URI=http://192.168.44.122:11311'
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
