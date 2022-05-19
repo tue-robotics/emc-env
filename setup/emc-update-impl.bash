@@ -105,9 +105,6 @@ fi
 
 # 2) Download packages
 _git_clone_or_update https://github.com/tue-robotics/emc_system "$EMC_SYSTEM_DIR"/src/emc_system
-_git_clone_or_update https://github.com/tue-robotics/emc_simulator "$EMC_SYSTEM_DIR"/src/emc_simulator
-_git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2
-_git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
 # Robot specific packages
 if [ "$ROBOT_REAL" = true ] ; then
   _git_clone_or_update https://github.com/tue-robotics/mrc_hero_bringup "$EMC_SYSTEM_DIR"/src/mrc_hero_bringup
