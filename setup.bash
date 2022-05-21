@@ -65,7 +65,8 @@ function emc-update
 
 # --------------------------------------------------------------------------------
 
-alias hero-teleop='rosrun emc_simulator teleop.py hero'
+alias pyro-teleop='rosrun emc_system teleop.py pyro'
+alias hero-teleop='rosrun emc_system teleop.py hero'
 alias hero-open-door='rostopic pub --once /hero/open_door std_msgs/Empty "{}"'
 
 alias mrc-update=emc-update
@@ -73,8 +74,11 @@ alias mrc-update=emc-update
 if [ "$ROBOT_REAL" = true ] ;
  then
   alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
+  alias pyro-start='roslaunch rosbot_bringup start.launch'
 else
+  alias sshpyro='ssh -A husarion@192.168.44.122'
   alias sshhero='ssh -A mrc@192.168.44.51'
+  alias pyro-core='export ROS_MASTER_URI=http://192.168.44.122:11311'
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
   alias mrc-sim='rosrun emc_simulator pico_simulator'
   alias mrc-viz='rosrun emc_system emc_viz'
