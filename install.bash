@@ -1,6 +1,12 @@
 export EMC_DIR=~/.emc
 export EMC_ENV_DIR=$EMC_DIR/env
 
+if ! dpkg -s curl &> /dev/null
+then
+    echo "Going to install curl"
+    sudo apt-get install -y -q curl
+fi
+
 if ! dpkg -s git &> /dev/null
 then
     echo "Going to install git"
