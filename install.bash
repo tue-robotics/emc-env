@@ -4,13 +4,13 @@ export EMC_ENV_DIR=$EMC_DIR/env
 if ! dpkg -s git &> /dev/null
 then
     echo "Going to install git"
-    sudo apt-get install git
+    sudo apt-get install -y -q git
 fi
 
 if ! dpkg -s python-is-python3 &> /dev/null
 then
     echo "Going to install python-is-python3"
-    sudo apt-get install python-is-python3
+    sudo apt-get install -y -q python-is-python3
 fi
 
 # Install / update the installer / updater
