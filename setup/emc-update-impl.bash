@@ -65,11 +65,14 @@ function _git_clone_or_update
 # Install ROS
 if [ ! -d /opt/ros/"$EMC_ROS_DISTRO" ]
 then
-    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    if [ ! -f /etc/apt/sources.list.d/ros-latest.list ]
+    then
+        sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
-    wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 
-    sudo apt-get update
+        sudo apt-get update
+    fi
 
     # Install basic ROS packages. All other packages will be installed using tue-rosdep
     if [ "$EMC_ROS_DISTRO" != kinetic ] && [ "$EMC_ROS_DISTRO" != melodic ]
