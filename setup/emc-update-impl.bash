@@ -112,9 +112,15 @@ _git_clone_or_update https://github.com/tue-robotics/catkin_lint_cmake "$EMC_SYS
 _git_clone_or_update https://github.com/tue-robotics/emc_simulator "$EMC_SYSTEM_DIR"/src/emc_simulator
 _git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2
 _git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
-# Robot specific packages
-if [ "$ROBOT_REAL" = true ] ; then
-  _git_clone_or_update https://github.com/tue-robotics/mrc_hero_bringup "$EMC_SYSTEM_DIR"/src/mrc_hero_bringup
+_git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
+
+if [ ! "$ROBOT_REAL" = true ]
+then
+    # Simbot specific packages
+    _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
+else
+    # Robot specific packages
+    _git_clone_or_update https://github.com/tue-robotics/mrc_hero_bringup "$EMC_SYSTEM_DIR"/src/mrc_hero_bringup
 fi
 
 # 3) Install dependencies
