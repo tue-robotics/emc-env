@@ -81,7 +81,7 @@ else
   alias sshhero='ssh -A -X mrc@192.168.44.51'
   alias pyro-core='export ROS_MASTER_URI=http://192.168.44.122:11311'
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
-  alias mrc-sim='ROS_HOME=`pwd` roslaunch emc_simulator sim.launch'
+  alias mrc-sim='roslaunch emc_simulator sim.launch'
   alias mrc-viz='rosrun emc_system emc_viz'
   alias mrc-speech='rosrun pico_talk speech_server.py'
 fi
