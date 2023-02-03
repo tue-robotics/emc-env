@@ -82,6 +82,7 @@ else
   alias pyro-core='export ROS_MASTER_URI=http://192.168.44.122:11311'
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
   alias mrc-sim='roslaunch emc_simulator sim.launch'
-  alias mrc-viz='rosrun emc_system emc_viz'
+  alias mrc-viz='roslaunch emc_simulator viz.launch'
+  #alias mrc-viz='rosrun emc_system emc_viz'
   alias mrc-speech='rosrun pico_talk speech_server.py'
 fi
