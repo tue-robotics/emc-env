@@ -75,7 +75,7 @@ alias mrc-update=emc-update
 if [ "$ROBOT_REAL" = true ] ;
  then
   alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
-  alias pyro-start='roslaunch rosbot_bringup start.launch'
+  alias pyro-start='roslaunch rosbot_bringup start_emc.launch'
 else
   alias sshpyro='ssh -A -X husarion@192.168.44.122'
   alias sshhero='ssh -A -X mrc@192.168.44.51'
