@@ -19,6 +19,12 @@ then
     sudo apt-get install -y -q python-is-python3
 fi
 
+if ! dpkg -s python3-catkin-tools &> /dev/null
+then
+    echo "Going to install python3-catkin-tools"
+    sudo apt-get install -y -q python3-catkin-tools
+fi
+
 # Install / update the installer / updater
 if [[ ! -d $EMC_ENV_DIR ]] && [[ -z "$CI" ]]
 then

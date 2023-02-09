@@ -101,9 +101,6 @@ _make_sure_installed g++ git subversion
 if [ ! -d "$EMC_SYSTEM_DIR"/src ]
 then
     mkdir -p "$EMC_SYSTEM_DIR"/src
-    catkin_make --directory "$EMC_SYSTEM_DIR"
-    # shellcheck disable=SC1090
-    source "$EMC_SYSTEM_DIR"/devel/setup.bash
 fi
 
 # 2) Download packages
@@ -127,7 +124,7 @@ fi
 _make_sure_installed libassimp-dev ros-"${EMC_ROS_DISTRO}"-cv-bridge ros-"${EMC_ROS_DISTRO}"-image-geometry ros-"${EMC_ROS_DISTRO}"-map-server ros-"${EMC_ROS_DISTRO}"-message-generation ros-"${EMC_ROS_DISTRO}"-message-runtime ros-"${EMC_ROS_DISTRO}"-nav-msgs ros-"${EMC_ROS_DISTRO}"-roscpp ros-"${EMC_ROS_DISTRO}"-shape-msgs ros-"${EMC_ROS_DISTRO}"-tf2
 
 # 4) Compile
-catkin_make --directory "$EMC_SYSTEM_DIR"
+catkin build --workspace "$EMC_SYSTEM_DIR"
 
 # 5) Install the libraries
 sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.so
