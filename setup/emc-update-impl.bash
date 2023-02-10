@@ -111,7 +111,7 @@ _git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/s
 _git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
 _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
 
-if [ ! "$ROBOT_REAL" = true ]
+if [ "$ROBOT_REAL" != true ]
 then
     # Simbot specific packages
     _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
