@@ -1,11 +1,11 @@
 #! /bin/bash
 
-set -e
-
-err_report() {
-  echo -e "errexit on line $(caller)" >&2
-  trap - ERR
-  set +e
+err_report()
+{
+   exit_code=$? 
+   echo -e "error(${exit_code}) on line $(caller)" >&2
+   trap - ERR
+   exit ${exit_code}
 }
 
 trap err_report ERR
@@ -152,4 +152,3 @@ sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.s
 sudo cp "$EMC_SYSTEM_DIR"/src/emc_system/include/emc /usr/include/ -r
 
 trap - ERR
-set +e
