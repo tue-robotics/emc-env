@@ -133,6 +133,9 @@ then
 else
 	catkin build --workspace "$EMC_SYSTEM_DIR"
 fi
+exit_code=$?
+
+echo -e "exit_code: ${exit_code}"
 
 echo -e "\n\n\n\n\n\n\n\n\n\n Continuing after failed build"
 
