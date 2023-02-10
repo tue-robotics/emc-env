@@ -42,7 +42,7 @@ function emc-update
     if ! dpkg -s git &> /dev/null
     then
         echo "Going to install git"
-        sudo apt-get install git
+        sudo apt-get install -y -q  git
     fi
 
     # Update the installer / updater if not in CI
@@ -72,8 +72,8 @@ alias pyro-open-door='rostopic pub --once /pyro/open_door std_msgs/Empty "{}"'
 
 alias mrc-update=emc-update
 
-if [ "$ROBOT_REAL" = true ] ;
- then
+if [ "$ROBOT_REAL" == true ]
+then
   alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
   alias pyro-start='roslaunch rosbot_bringup start_emc.launch'
 else

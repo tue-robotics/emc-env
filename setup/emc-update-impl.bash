@@ -1,5 +1,15 @@
 #! /bin/bash
 
+err_report()
+{
+   exit_code=$? 
+   echo -e "error(${exit_code}) on line $(caller)" >&2
+   trap - ERR
+   exit ${exit_code}
+}
+
+trap err_report ERR
+
 # --------------------------------------------------------------------------------
 
 function _make_sure_installed
@@ -41,7 +51,7 @@ function _make_sure_installed
         done
 
         # shellcheck disable=SC2086
-        sudo apt-get install -y $pkgs_to_install
+        sudo apt-get install -y -q $pkgs_to_install
     fi
 }
 
@@ -111,7 +121,7 @@ _git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/s
 _git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
 _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
 
-if [ ! "$ROBOT_REAL" = true ]
+if [ "$ROBOT_REAL" != true ]
 then
     # Simbot specific packages
     _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
@@ -127,11 +137,13 @@ _make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-
 if [[ -n "$CI" ]]
 then
 	# suppress status bar in CI
-	catkin build --workspace "$EMC_SYSTEM_DIR" --no-status
+	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF --no-status
 else
-	catkin build --workspace "$EMC_SYSTEM_DIR"
+	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF
 fi
 
 # 5) Install the libraries
 sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.so
 sudo cp "$EMC_SYSTEM_DIR"/src/emc_system/include/emc /usr/include/ -r
+
+trap - ERR
