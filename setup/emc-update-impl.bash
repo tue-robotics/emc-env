@@ -1,5 +1,15 @@
 #! /bin/bash
 
+set -e
+
+err_report() {
+  echo -e "errexit on line $(caller)" >&2
+  trap - ERR
+  set +e
+}
+
+trap err_report ERR
+
 # --------------------------------------------------------------------------------
 
 function _make_sure_installed
@@ -140,3 +150,6 @@ echo -e "\n\n\n\n\n\n\n\n\n\n Continuing after failed build"
 # 5) Install the libraries
 sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.so
 sudo cp "$EMC_SYSTEM_DIR"/src/emc_system/include/emc /usr/include/ -r
+
+trap - ERR
+set +e
