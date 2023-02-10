@@ -42,7 +42,7 @@ function emc-update
     if ! dpkg -s git &> /dev/null
     then
         echo "Going to install git"
-        sudo apt-get install git
+        sudo apt-get install -y -q  git
     fi
 
     # Update the installer / updater if not in CI
