@@ -137,9 +137,9 @@ _make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-
 if [[ -n "$CI" ]]
 then
 	# suppress status bar in CI
-	catkin build --workspace "$EMC_SYSTEM_DIR" --no-status
+	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF --no-status
 else
-	catkin build --workspace "$EMC_SYSTEM_DIR"
+	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF
 fi
 exit_code=$?
 
