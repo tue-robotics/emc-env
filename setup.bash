@@ -72,7 +72,7 @@ alias pyro-open-door='rostopic pub --once /pyro/open_door std_msgs/Empty "{}"'
 
 alias mrc-update=emc-update
 
-if [ "$ROBOT_REAL" = true ] ;
+if [ "$ROBOT_REAL" == true ] ;
  then
   alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
   alias pyro-start='roslaunch rosbot_bringup start_emc.launch'
