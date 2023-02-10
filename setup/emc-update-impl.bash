@@ -41,7 +41,7 @@ function _make_sure_installed
         done
 
         # shellcheck disable=SC2086
-        sudo apt-get install -y $pkgs_to_install
+        sudo apt-get install -y -q $pkgs_to_install
     fi
 }
 
