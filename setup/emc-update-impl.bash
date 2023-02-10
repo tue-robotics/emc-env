@@ -141,11 +141,6 @@ then
 else
 	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF
 fi
-exit_code=$?
-
-echo -e "exit_code: ${exit_code}"
-
-echo -e "\n\n\n\n\n\n\n\n\n\n Continuing after failed build"
 
 # 5) Install the libraries
 sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.so
