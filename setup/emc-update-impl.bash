@@ -1,7 +1,5 @@
 #! /bin/bash
 
-set +e
-
 # --------------------------------------------------------------------------------
 
 function _make_sure_installed
@@ -142,5 +140,3 @@ echo -e "\n\n\n\n\n\n\n\n\n\n Continuing after failed build"
 # 5) Install the libraries
 sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.so
 sudo cp "$EMC_SYSTEM_DIR"/src/emc_system/include/emc /usr/include/ -r
-
-set -e
