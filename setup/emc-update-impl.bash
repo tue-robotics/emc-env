@@ -127,6 +127,7 @@ then
     _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
 else
     # Robot specific packages
+    _git_clone_or_update https://github.com/tue-robotics/rosbot_bringup.git "$EMC_SYSTEM_DIR"/src/rosbot_bringup
     _git_clone_or_update https://github.com/tue-robotics/mrc_hero_bringup "$EMC_SYSTEM_DIR"/src/mrc_hero_bringup
 fi
 
