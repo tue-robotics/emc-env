@@ -146,4 +146,11 @@ fi
 sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.so
 sudo cp "$EMC_SYSTEM_DIR"/src/emc_system/include/emc /usr/include/ -r
 
+# 6) Install gtest for localization assignments
+_make_sure_installed libgtest-dev
+cd /usr/src/gtest
+sudo cmake CMakeLists.txt
+sudo make
+sudo cp ./lib/libgtest*.a /usr/lib
+
 trap - ERR
