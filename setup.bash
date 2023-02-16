@@ -20,7 +20,7 @@ then
             EMC_ROS_DISTRO=noetic
             echo "[emc-env] Detected ubuntu 20.04, using ROS Noetic"
             ;;
-        DISTRIB_ID in "18.04")
+       "18.04")
             EMC_ROS_DISTRO=melodic
             echo "[emc-env] Detected ubuntu 18.04, using ROS Melodic"
             ;;
