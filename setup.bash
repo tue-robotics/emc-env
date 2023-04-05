@@ -65,8 +65,7 @@ function emc-update
 
 # --------------------------------------------------------------------------------
 
-alias pyro-teleop='rosrun emc_system teleop.py pyro'
-alias hero-teleop='rosrun emc_system teleop.py hero'
+alias mrc-teleop='rosrun emc_system teleop.py'
 alias hero-open-door='rostopic pub --once /hero/open_door std_msgs/Empty "{}"'
 alias pyro-open-door='rostopic pub --once /pyro/open_door std_msgs/Empty "{}"'
 
