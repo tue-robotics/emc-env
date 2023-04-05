@@ -16,11 +16,12 @@ then
     fi
 
     # Set ROS version
-    case $DISTRIB_RELEASE in "20.04")
+    case $DISTRIB_RELEASE in
+        "20.04")
             EMC_ROS_DISTRO=noetic
             echo "[emc-env] Detected ubuntu 20.04, using ROS Noetic"
             ;;
-       "18.04")
+        "18.04")
             EMC_ROS_DISTRO=melodic
             echo "[emc-env] Detected ubuntu 18.04, using ROS Melodic"
             ;;
