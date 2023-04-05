@@ -16,13 +16,16 @@ then
     fi
 
     # Set ROS version
-    case $DISTRIB_RELEASE in
-        "20.04")
+    case $DISTRIB_RELEASE in "20.04")
             EMC_ROS_DISTRO=noetic
             echo "[emc-env] Detected ubuntu 20.04, using ROS Noetic"
             ;;
+       "18.04")
+            EMC_ROS_DISTRO=melodic
+            echo "[emc-env] Detected ubuntu 18.04, using ROS Melodic"
+            ;;
         *)
-            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use either 20.04, 20.04 or 20.04"
+            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use 20.04, 18.04"
             exit 1
             ;;
     esac
@@ -75,13 +78,14 @@ then
   alias hero-start='roslaunch mrc_hero_bringup start.launch --screen'
   alias pyro-start='roslaunch rosbot_bringup start_emc.launch'
 else
-  alias sshpyro='ssh -A -X husarion@192.168.44.122'
+  alias sshbobo='ssh -A -X husarion@192.168.1.4'
+  alias sshcoco='ssh -A -X husarion@192.168.1.5'
   alias sshhero='ssh -A -X mrc@192.168.44.51'
-  alias pyro-core='export ROS_MASTER_URI=http://192.168.44.122:11311'
+  alias bobo-core='export ROS_MASTER_URI=http://192.168.1.4:11311'
+  alias coco-core='export ROS_MASTER_URI=http://192.168.1.5:11311'
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
   alias mrc-sim='rosrun emc_simulator simulator'
   alias sim-rviz='roslaunch emc_simulator viz.launch'
-  #alias mrc-viz='rosrun emc_system emc_viz'
   alias mrc-speech='rosrun pico_talk speech_server.py'
 
   alias hero-rviz='roslaunch emc_system hero_rviz.launch'
