@@ -103,7 +103,7 @@ fi
 # shellcheck disable=SC1090
 source /opt/ros/"$EMC_ROS_DISTRO"/setup.bash
 
-_make_sure_installed g++ git subversion
+_make_sure_installed g++ git
 
 # Install EMC framework
 
