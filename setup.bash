@@ -70,7 +70,6 @@ function emc-update
 # --------------------------------------------------------------------------------
 
 alias mrc-teleop='rosrun emc_system teleop.py'
-alias mrc-open-door='rostopic pub --once /hero/open_door std_msgs/Empty "{}"'
 
 alias mrc-update=emc-update
 
@@ -87,6 +86,7 @@ else
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
   alias mrc-sim='rosrun emc_simulator simulator'
   alias sim-rviz='roslaunch emc_simulator viz.launch'
+  alias mrc-open-door='rostopic pub --once /pyro/open_door std_msgs/Empty "{}"'
   alias mrc-speech='rosrun pico_talk speech_server.py'
 
   alias hero-rviz='roslaunch emc_system hero_rviz.launch'
