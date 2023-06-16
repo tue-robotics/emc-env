@@ -77,6 +77,8 @@ if [ "$ROBOT_REAL" == true ]
 then
   alias hero-start='rosparam load $EMC_SYSTEM_DIR/src/emc_system/config/hero_mrc_config.yaml'
   alias pyro-start='roslaunch rosbot_bringup start_emc.launch'
+
+  alias define-map='rosrun map_server map_server'
 else
   alias sshbobo='ssh -A -X husarion@192.168.1.5'
   alias sshcoco='ssh -A -X husarion@192.168.1.4'
