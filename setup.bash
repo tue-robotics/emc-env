@@ -54,7 +54,7 @@ function emc-update
     then
         if [[ ! -d $EMC_ENV_DIR ]]
         then
-            git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
+            git clone git@github.com:/tue-robotics/emc-env $EMC_ENV_DIR
         else
             git -C $EMC_ENV_DIR pull
         fi

@@ -22,7 +22,7 @@ fi
 # Install / update the installer / updater
 if [[ ! -d $EMC_ENV_DIR ]] && [[ -z "$CI" ]]
 then
-    git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
+    git clone git@github.com:/tue-robotics/emc-env $EMC_ENV_DIR
 elif [[ -n "$CI" ]]
 then
     mkdir -p $EMC_DIR
