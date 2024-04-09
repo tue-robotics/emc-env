@@ -78,11 +78,11 @@ then
 
   alias define-map='rosrun map_server map_server'
 else
-  alias sshbobo='ssh -A -X husarion@192.168.1.5'
-  alias sshcoco='ssh -A -X husarion@192.168.1.4'
+  alias sshbobo='ssh -A -X husarion@bobo.local'
+  alias sshcoco='ssh -A -X husarion@coco.local'
   alias sshhero='ssh -A -X mrc@192.168.44.51'
-  alias bobo-core='export ROS_MASTER_URI=http://192.168.1.5:11311'
-  alias coco-core='export ROS_MASTER_URI=http://192.168.1.4:11311'
+  alias bobo-core='export ROS_MASTER_URI=http://10.0.0.5:11311'
+  alias coco-core='export ROS_MASTER_URI=http://10.0.0.4:11311'
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
   alias mrc-sim='rosrun emc_simulator simulator'
   alias sim-rviz='roslaunch emc_simulator viz.launch'
