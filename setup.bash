@@ -75,6 +75,8 @@ if [ "$ROBOT_REAL" == true ]
 then
   alias hero-start='rosparam load $EMC_SYSTEM_DIR/src/emc_system/config/hero_mrc_config.yaml'
   alias rosbot-start='roslaunch rosbot_bringup start_emc.launch'
+  alias bobo-start='roslaunch rosbot_bringup start_emc.launch name:=bobo'
+  alias coco-start='roslaunch rosbot_bringup start_emc.launch name:=coco'
 
   alias define-map='rosrun map_server map_server'
 else
@@ -91,4 +93,6 @@ else
 
   alias hero-rviz='roslaunch emc_system hero_rviz.launch'
   alias rosbot-rviz='roslaunch emc_system rosbot_rviz.launch'
+  alias bobo-rviz='roslaunch emc_system rosbot_rviz.launch'
+  alias coco-rviz='roslaunch emc_system rosbot_rviz.launch'
 fi
