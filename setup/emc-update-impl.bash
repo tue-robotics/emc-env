@@ -132,6 +132,7 @@ _make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-
 
 # 3.5) Install networking tools
 _make_sure_installed libnss-mdns avahi-daemon avahi-dnsconfd nmap ssh net-tools
+
 # 4) Compile
 if [[ -n "$CI" ]]
 then
