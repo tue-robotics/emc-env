@@ -65,11 +65,14 @@ function emc-update
 }
 
 # --------------------------------------------------------------------------------
-export ROS_HOSTNAME=$HOSTNAME.local
+#export ROS_HOSTNAME=$HOSTNAME.local
 
 alias mrc-teleop='rosrun emc_system teleop.py'
 
 alias mrc-update=emc-update
+
+export BOBO_IP='192.168.6.68'
+export COCO_IP='192.168.6.186'
 
 if [ "$ROBOT_REAL" == true ]
 then
@@ -80,11 +83,11 @@ then
 
   alias define-map='rosrun map_server map_server'
 else
-  alias sshbobo='ssh -A -X husarion@bobo.local'
-  alias sshcoco='ssh -A -X husarion@coco.local'
+  alias sshbobo='ssh -A -X husarion@$BOBO_IP'
+  alias sshcoco='ssh -A -X husarion@$COCO_IP'
   alias sshhero='ssh -A -X mrc@192.168.44.51'
-  alias bobo-core='export ROS_MASTER_URI=http://bobo.local:11311'
-  alias coco-core='export ROS_MASTER_URI=http://coco.local:11311'
+  alias bobo-core='export ROS_MASTER_URI=http://$BOBO_IP:11311'
+  alias coco-core='export ROS_MASTER_URI=http://$COCO_IP:11311'
   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
   alias mrc-sim='rosrun emc_simulator simulator'
   alias sim-rviz='roslaunch emc_simulator viz.launch'
