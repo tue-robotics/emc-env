@@ -1,5 +1,12 @@
+# set -e
+# set -x
+
 export EMC_DIR=~/.emc
 export EMC_ENV_DIR=$EMC_DIR/env
+
+# log_file="$EMC_DIR/install.log"
+# exec > >(tee -i $log_file)
+# exec 2>&1
 
 if ! dpkg -s curl &> /dev/null
 then
@@ -23,11 +30,13 @@ fi
 if [[ ! -d $EMC_ENV_DIR ]] && [[ -z "$CI" ]]
 then
     git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
+    git -C $EMC_ENV_DIR checkout ros2
 elif [[ -n "$CI" ]]
 then
     mkdir -p $EMC_DIR
     cp -r . $EMC_ENV_DIR
 else
+    git -C $EMC_ENV_DIR checkout ros2
     git -C $EMC_ENV_DIR pull
 fi
 

@@ -14,6 +14,10 @@ then
 
     # Set ROS version
     case $DISTRIB_RELEASE in
+        "24.04")
+            EMC_ROS_DISTRO=jazzy
+            echo "[emc-env] Detected ubuntu 24.04, using ROS2 Jazzy"
+            ;;
         "20.04")
             EMC_ROS_DISTRO=noetic
             echo "[emc-env] Detected ubuntu 20.04, using ROS Noetic"
@@ -23,13 +27,28 @@ then
             echo "[emc-env] Detected ubuntu 18.04, using ROS Melodic"
             ;;
         *)
-            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use 20.04, 18.04"
+            echo "[emc-env] Ubuntu $DISTRIB_RELEASE is unsupported. Use 24.04, 20.04, 18.04"
             exit 1
             ;;
     esac
 fi
 
 export EMC_ROS_DISTRO
+
+# Source the ROS environment
+if [ -f /opt/ros/$EMC_ROS_DISTRO/setup.bash ]
+then
+    source /opt/ros/$EMC_ROS_DISTRO/setup.bash
+else
+    echo "[emc-env] ROS distribution $EMC_ROS_DISTRO is not installed."
+    exit 1
+fi
+
+# Source the workspace
+if [ -f $EMC_SYSTEM_DIR/install/setup.bash ]
+then
+    source $EMC_SYSTEM_DIR/install/setup.bash
+fi
 
 if [ -f $EMC_SYSTEM_DIR/devel/setup.bash ]
 then
@@ -52,8 +71,10 @@ function emc-update
         if [[ ! -d $EMC_ENV_DIR ]]
         then
             git clone https://github.com/tue-robotics/emc-env $EMC_ENV_DIR
+            git -C $EMC_ENV_DIR checkout ros2
         else
             git -C $EMC_ENV_DIR pull
+            git -C $EMC_ENV_DIR checkout ros2
         fi
     fi
 
@@ -67,35 +88,40 @@ function emc-update
 # --------------------------------------------------------------------------------
 #export ROS_HOSTNAME=$HOSTNAME.local
 
-alias mrc-teleop='rosrun emc_system teleop.py'
+# alias mrc-teleop='rosrun emc_system teleop.py'
+alias mrc-teleop='python3 $EMC_ENV_DIR/../system/src/emc_system/scripts/teleop.py'
+alias mrc-talker='python3 $EMC_ENV_DIR/../system/src/emc_system/scripts/talker.py'
 
 alias mrc-update=emc-update
 
 export BOBO_IP='192.168.6.68'
 export COCO_IP='192.168.6.186'
 
-if [ "$ROBOT_REAL" == true ]
-then
-  alias hero-start='rosparam load $EMC_SYSTEM_DIR/src/emc_system/config/hero_mrc_config.yaml'
-  alias rosbot-start='roslaunch rosbot_bringup start_emc.launch'
-  alias bobo-start='roslaunch rosbot_bringup start_emc.launch name:=bobo'
-  alias coco-start='roslaunch rosbot_bringup start_emc.launch name:=coco'
 
-  alias define-map='rosrun map_server map_server'
-else
-  alias sshbobo='ssh -A -X husarion@$BOBO_IP'
-  alias sshcoco='ssh -A -X husarion@$COCO_IP'
-  alias sshhero='ssh -A -X mrc@192.168.44.51'
-  alias bobo-core='export ROS_MASTER_URI=http://$BOBO_IP:11311'
-  alias coco-core='export ROS_MASTER_URI=http://$COCO_IP:11311'
-  alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
-  alias mrc-sim='rosrun emc_simulator simulator'
-  alias sim-rviz='roslaunch emc_simulator viz.launch'
-  alias mrc-open-door='rostopic pub --once /pyro/open_door std_msgs/Empty "{}"'
-  alias mrc-speech='rosrun pico_talk speech_server.py'
+# Change aliases for executables for ros2
 
-  alias hero-rviz='roslaunch emc_system hero_rviz.launch'
-  alias rosbot-rviz='roslaunch emc_system rosbot_rviz.launch'
-  alias bobo-rviz='roslaunch emc_system rosbot_rviz.launch'
-  alias coco-rviz='roslaunch emc_system rosbot_rviz.launch'
-fi
+# if [ "$ROBOT_REAL" == true ]
+# then
+#   alias hero-start='rosparam load $EMC_SYSTEM_DIR/src/emc_system/config/hero_mrc_config.yaml'
+#   alias rosbot-start='roslaunch rosbot_bringup start_emc.launch'
+#   alias bobo-start='roslaunch rosbot_bringup start_emc.launch name:=bobo'
+#   alias coco-start='roslaunch rosbot_bringup start_emc.launch name:=coco'
+
+#   alias define-map='rosrun map_server map_server'
+# else
+#   alias sshbobo='ssh -A -X husarion@$BOBO_IP'
+#   alias sshcoco='ssh -A -X husarion@$COCO_IP'
+#   alias sshhero='ssh -A -X mrc@192.168.44.51'
+#   alias bobo-core='export ROS_MASTER_URI=http://$BOBO_IP:11311'
+#   alias coco-core='export ROS_MASTER_URI=http://$COCO_IP:11311'
+#   alias hero-core='export ROS_MASTER_URI=http://192.168.44.51:11311'
+#   alias mrc-sim='rosrun emc_simulator simulator'
+#   alias sim-rviz='roslaunch emc_simulator viz.launch'
+#   alias mrc-open-door='rostopic pub --once /pyro/open_door std_msgs/Empty "{}"'
+#   alias mrc-speech='rosrun pico_talk speech_server.py'
+
+#   alias hero-rviz='roslaunch emc_system hero_rviz.launch'
+#   alias rosbot-rviz='roslaunch emc_system rosbot_rviz.launch'
+#   alias bobo-rviz='roslaunch emc_system rosbot_rviz.launch'
+#   alias coco-rviz='roslaunch emc_system rosbot_rviz.launch'
+# fi

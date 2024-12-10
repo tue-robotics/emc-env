@@ -61,12 +61,20 @@ function _git_clone_or_update
 {
     local repo_url=$1
     local dest=$2
+    local branch=$3
 
     if [ ! -d "$dest" ]
     then
         git clone "$repo_url" "$dest"
+        if [ -n "$branch" ]; then
+            git -C "$dest" checkout "$branch"
+        fi
     else
         git -C "$dest" pull
+        if [ -n "$branch" ]; then
+            git -C "$dest" checkout "$branch"
+            git -C "$dest" pull origin "$branch"
+        fi
     fi
 }
 
@@ -75,7 +83,7 @@ function _git_clone_or_update
 # Install ROS
 if [ ! -d /opt/ros/"$EMC_ROS_DISTRO" ]
 then
-    if [ ! -f /etc/apt/sources.list.d/ros-latest.list ]
+    if [ ! -f /etc/apt/sources.list.d/ros2.list ]
     then
         sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
@@ -114,7 +122,7 @@ then
 fi
 
 # 2) Download packages
-_git_clone_or_update https://github.com/tue-robotics/emc_system "$EMC_SYSTEM_DIR"/src/emc_system
+_git_clone_or_update https://github.com/tue-robotics/emc_system "$EMC_SYSTEM_DIR"/src/emc_system ros2
 _git_clone_or_update https://github.com/tue-robotics/catkin_lint_cmake "$EMC_SYSTEM_DIR"/src/catkin_lint_cmake
 _git_clone_or_update https://github.com/tue-robotics/emc_simulator "$EMC_SYSTEM_DIR"/src/emc_simulator
 _git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2
@@ -128,19 +136,27 @@ then
 fi
 
 # 3) Install dependencies
-_make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-cv-bridge ros-"${EMC_ROS_DISTRO}"-image-geometry ros-"${EMC_ROS_DISTRO}"-map-server ros-"${EMC_ROS_DISTRO}"-message-generation ros-"${EMC_ROS_DISTRO}"-message-runtime ros-"${EMC_ROS_DISTRO}"-nav-msgs ros-"${EMC_ROS_DISTRO}"-robot-state-publisher ros-"${EMC_ROS_DISTRO}"-joint-state-publisher ros-"${EMC_ROS_DISTRO}"-roscpp ros-"${EMC_ROS_DISTRO}"-rviz ros-"${EMC_ROS_DISTRO}"-shape-msgs ros-"${EMC_ROS_DISTRO}"-tf2 ros-"${EMC_ROS_DISTRO}"-tf ros-"${EMC_ROS_DISTRO}"-xacro
+# _make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-cv-bridge ros-"${EMC_ROS_DISTRO}"-image-geometry ros-"${EMC_ROS_DISTRO}"-map-server ros-"${EMC_ROS_DISTRO}"-message-generation ros-"${EMC_ROS_DISTRO}"-message-runtime ros-"${EMC_ROS_DISTRO}"-nav-msgs ros-"${EMC_ROS_DISTRO}"-robot-state-publisher ros-"${EMC_ROS_DISTRO}"-joint-state-publisher ros-"${EMC_ROS_DISTRO}"-roscpp ros-"${EMC_ROS_DISTRO}"-rviz ros-"${EMC_ROS_DISTRO}"-shape-msgs ros-"${EMC_ROS_DISTRO}"-tf2 ros-"${EMC_ROS_DISTRO}"-tf ros-"${EMC_ROS_DISTRO}"-xacro
+_make_sure_installed ros-"${EMC_ROS_DISTRO}"-desktop ros-"${EMC_ROS_DISTRO}"-ros-base 
 
 # 4) Compile
+cd "$EMC_SYSTEM_DIR"
 if [[ -n "$CI" ]]
 then
-	# suppress status bar in CI
-	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF --no-status
+    # suppress status bar in CI
+    colcon build --packages-select emc_system --event-handlers console_cohesion+ --cmake-args -DCMAKE_BUILD_TYPE=Release
 else
-	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF
+    colcon build --packages-select emc_system --cmake-args -DCMAKE_BUILD_TYPE=Release
+fi
+
+# Source the workspace
+if [ -f "$EMC_SYSTEM_DIR/install/setup.bash" ]
+then
+    source "$EMC_SYSTEM_DIR/install/setup.bash"
 fi
 
 # 5) Install the libraries
-sudo cp "$EMC_SYSTEM_DIR"/devel/lib/libemc_system.so /usr/lib/libemc-framework.so
+sudo cp "$EMC_SYSTEM_DIR"/install/emc_system/lib/emc_system/libemc-framework.so /usr/lib/libemc-framework.so
 sudo cp "$EMC_SYSTEM_DIR"/src/emc_system/include/emc /usr/include/ -r
 
 trap - ERR
