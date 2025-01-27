@@ -123,11 +123,11 @@ fi
 
 # 2) Download packages
 _git_clone_or_update https://github.com/tue-robotics/emc_system "$EMC_SYSTEM_DIR"/src/emc_system ros2
-_git_clone_or_update https://github.com/tue-robotics/catkin_lint_cmake "$EMC_SYSTEM_DIR"/src/catkin_lint_cmake
-_git_clone_or_update https://github.com/tue-robotics/emc_simulator "$EMC_SYSTEM_DIR"/src/emc_simulator
-_git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2
-_git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
-_git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
+# _git_clone_or_update https://github.com/tue-robotics/catkin_lint_cmake "$EMC_SYSTEM_DIR"/src/catkin_lint_cmake
+_git_clone_or_update https://github.com/tue-robotics/emc_simulator "$EMC_SYSTEM_DIR"/src/emc_simulator ros2
+_git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2 ros2
+# _git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
+# _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
 
 if [ "$ROBOT_REAL" != true ]
 then
