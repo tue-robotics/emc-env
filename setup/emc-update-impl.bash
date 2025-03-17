@@ -139,7 +139,7 @@ fi
 
 # 3) Install dependencies
 # _make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-cv-bridge ros-"${EMC_ROS_DISTRO}"-image-geometry ros-"${EMC_ROS_DISTRO}"-map-server ros-"${EMC_ROS_DISTRO}"-message-generation ros-"${EMC_ROS_DISTRO}"-message-runtime ros-"${EMC_ROS_DISTRO}"-nav-msgs ros-"${EMC_ROS_DISTRO}"-robot-state-publisher ros-"${EMC_ROS_DISTRO}"-joint-state-publisher ros-"${EMC_ROS_DISTRO}"-roscpp ros-"${EMC_ROS_DISTRO}"-rviz ros-"${EMC_ROS_DISTRO}"-shape-msgs ros-"${EMC_ROS_DISTRO}"-tf2 ros-"${EMC_ROS_DISTRO}"-tf ros-"${EMC_ROS_DISTRO}"-xacro
-_make_sure_installed ros-"${EMC_ROS_DISTRO}"-desktop ros-"${EMC_ROS_DISTRO}"-ros-base ros-"${EMC_ROS_DISTRO}"-nav2-map-server ros-"${EMC_ROS_DISTRO}-nav2-lifecycle-manager
+_make_sure_installed ros-"${EMC_ROS_DISTRO}"-desktop ros-"${EMC_ROS_DISTRO}"-ros-base ros-"${EMC_ROS_DISTRO}"-nav2-map-server  ros-"${EMC_ROS_DISTRO}"-nav2-lifecycle-manager
 
 # 4) Compile
 cd "$EMC_SYSTEM_DIR"
