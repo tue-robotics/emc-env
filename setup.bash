@@ -39,9 +39,6 @@ export EMC_ROS_DISTRO
 if [ -f /opt/ros/$EMC_ROS_DISTRO/setup.bash ]
 then
     source /opt/ros/$EMC_ROS_DISTRO/setup.bash
-else
-    # echo "[emc-env] ROS distribution $EMC_ROS_DISTRO is not installed."
-    # exit 1
 fi
 
 # Source the workspace
