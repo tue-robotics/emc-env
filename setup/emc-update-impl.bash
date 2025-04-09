@@ -85,9 +85,9 @@ if [ ! -d /opt/ros/"$EMC_ROS_DISTRO" ]
 then
     if [ ! -f /etc/apt/sources.list.d/ros2.list ]
     then
-        sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+        curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 
-        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
         sudo apt-get update
     fi
@@ -138,7 +138,7 @@ _git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/s
 #fi
 
 # 3) Install dependencies
-# _make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-cv-bridge ros-"${EMC_ROS_DISTRO}"-image-geometry ros-"${EMC_ROS_DISTRO}"-map-server ros-"${EMC_ROS_DISTRO}"-message-generation ros-"${EMC_ROS_DISTRO}"-message-runtime ros-"${EMC_ROS_DISTRO}"-nav-msgs ros-"${EMC_ROS_DISTRO}"-robot-state-publisher ros-"${EMC_ROS_DISTRO}"-joint-state-publisher ros-"${EMC_ROS_DISTRO}"-roscpp ros-"${EMC_ROS_DISTRO}"-rviz ros-"${EMC_ROS_DISTRO}"-shape-msgs ros-"${EMC_ROS_DISTRO}"-tf2 ros-"${EMC_ROS_DISTRO}"-tf ros-"${EMC_ROS_DISTRO}"-xacro
+# _make_sure_installed colcon python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-cv-bridge ros-"${EMC_ROS_DISTRO}"-image-geometry ros-"${EMC_ROS_DISTRO}"-map-server ros-"${EMC_ROS_DISTRO}"-message-generation ros-"${EMC_ROS_DISTRO}"-message-runtime ros-"${EMC_ROS_DISTRO}"-nav-msgs ros-"${EMC_ROS_DISTRO}"-robot-state-publisher ros-"${EMC_ROS_DISTRO}"-joint-state-publisher ros-"${EMC_ROS_DISTRO}"-roscpp ros-"${EMC_ROS_DISTRO}"-rviz ros-"${EMC_ROS_DISTRO}"-shape-msgs ros-"${EMC_ROS_DISTRO}"-tf2 ros-"${EMC_ROS_DISTRO}"-tf ros-"${EMC_ROS_DISTRO}"-xacro
 _make_sure_installed ros-"${EMC_ROS_DISTRO}"-desktop ros-"${EMC_ROS_DISTRO}"-ros-base ros-"${EMC_ROS_DISTRO}"-nav2-map-server  ros-"${EMC_ROS_DISTRO}"-nav2-lifecycle-manager
 
 # 4) Compile
