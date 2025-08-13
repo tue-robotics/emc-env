@@ -56,6 +56,12 @@ function _make_sure_installed
             touch /tmp/emc_apt_get_updated
         fi
 
+        if [[ -n "$CI" ]]
+        then
+            export DEBIAN_FRONTEND=noninteractive
+            export TZ=UTC
+        fi
+
         # shellcheck disable=SC2086
         sudo apt-get install -y -q $pkgs_to_install
     fi
