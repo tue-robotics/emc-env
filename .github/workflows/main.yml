@@ -22,5 +22,9 @@ jobs:
     container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
+      - name: Install sudo
+        run: |
+          apt-get update
+          apt-get install -y sudo
       - name: Script
         run: source install.bash
