@@ -26,6 +26,10 @@ jobs:
     container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
+      - name: Export variables
+        run: |
+          export DEBIAN_FRONTEND
+          export TZ
       - name: Install sudo
         run: |
           apt-get update
