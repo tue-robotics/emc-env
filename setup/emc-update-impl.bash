@@ -91,7 +91,7 @@ then
     then
         CURL_ARGS+=("-H" "Authorization: Bearer ${GITHUB_TOKEN}")
     fi
-    newest_version=$(curl "${CURL_ARGS[@]}" -sL https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | jq -r '.tag_name')
+    newest_version=$(curl "${CURL_ARGS[@]}" -sL https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -m1 '"tag_name":' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')
     
     [[ ${newest_version} != "null" ]] || (exit 1)
     
