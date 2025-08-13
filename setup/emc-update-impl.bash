@@ -86,6 +86,15 @@ then
         sudo rm -f /etc/apt/sources.list.d/ros.list*
     fi
 
+    ubuntu_name=$(lsb_release -cs)
+
+   # Check whether universe is enabled
+   if ! grep -h ^deb /etc/apt/sources.list 2>/dev/null | grep -P "${ubuntu_name}[a-z\-]* (?:[a-z ]*(?:[a-z]+(?: [a-z]+)*)) universe" -q
+   then
+       sudo add-apt-repository universe
+       rm -f /tmp/emc_apt_get_updated
+   fi
+
     CURL_ARGS=("-H" "Accept: application/vnd.github+json")
     if [[ -n ${GITHUB_TOKEN} ]]
     then
@@ -94,7 +103,8 @@ then
     newest_version=$(curl "${CURL_ARGS[@]}" -sL https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -m1 '"tag_name":' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')
     
     [[ ${newest_version} != "null" ]] || (exit 1)
-    
+
+    ros_apt_source_pkg_name="ros-apt-source"
     curl -L -o /tmp/${ros_apt_source_pkg_name}.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${newest_version}/${ros_apt_source_pkg_name}_${newest_version}.${ubuntu_name}_all.deb"
     sudo dpkg -i /tmp/${ros_apt_source_pkg_name}.deb
     rm -f /tmp/emc_apt_get_updated
