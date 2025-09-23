@@ -7,15 +7,26 @@ on:
     - cron: '0 1 * * 1'
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     name: Build
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
-    runs-on: ${{ matrix.os }}
+        container: [ubuntu:20.04]
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v5
+      - name: Install sudo
+        run: |
+          apt-get update
+          apt-get install -y sudo
+      - name: Install tzdata
+        run: DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
       - name: Script
         run: source install.bash

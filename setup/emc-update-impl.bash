@@ -50,6 +50,12 @@ function _make_sure_installed
             ((i=i+1))
         done
 
+        if [[ ! -f /tmp/emc_apt_get_updated ]]
+        then
+            sudo apt-get update -qq
+            touch /tmp/emc_apt_get_updated
+        fi
+
         # shellcheck disable=SC2086
         sudo apt-get install -y -q $pkgs_to_install
     fi
@@ -73,25 +79,48 @@ function _git_clone_or_update
 # --------------------------------------------------------------------------------
 
 # Install ROS
-if [ ! -d /opt/ros/"$EMC_ROS_DISTRO" ]
+if [[ ! -d /opt/ros/"${EMC_ROS_DISTRO}" ]]
 then
-    if [ ! -f /etc/apt/sources.list.d/ros-latest.list ]
+    if [[ -f /etc/apt/sources.list.d/ros.list ]]
     then
-        sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-
-        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-
-        sudo apt-get update
+        sudo rm -f /etc/apt/sources.list.d/ros.list*
     fi
+
+    source /etc/os-release  # Get the UBUNTU_CODENAME
+
+   # Check whether universe is enabled
+   # The following regex checks for a 'deb' line in /etc/apt/sources.list that matches the current Ubuntu codename
+   # and includes the 'universe' component. It handles possible variations in the line format.
+   if ! grep -h ^deb /etc/apt/sources.list 2>/dev/null | grep -P "${UBUNTU_CODENAME}[a-z\-]* (?:[a-z ]*(?:[a-z]+(?: [a-z]+)*)) universe" -q
+   then
+       sudo add-apt-repository universe
+       rm -f /tmp/emc_apt_get_updated
+   fi
+
+    CURL_ARGS=("-H" "Accept: application/vnd.github+json")
+    if [[ -n ${GITHUB_TOKEN} ]]
+    then
+        CURL_ARGS+=("-H" "Authorization: Bearer ${GITHUB_TOKEN}")
+    fi
+    newest_version=$(curl "${CURL_ARGS[@]}" -sL https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -m1 '"tag_name":' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')
+    
+    [[ ${newest_version} != "null" ]] || { echo "Failed to retrieve latest ros-apt-source version" >&2; exit 1; }
+
+    ros_apt_source_pkg_name="ros-apt-source"
+    curl -fL -o /tmp/${ros_apt_source_pkg_name}.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${newest_version}/${ros_apt_source_pkg_name}_${newest_version}.${UBUNTU_CODENAME}_all.deb"
+    # Verify the downloaded .deb file is a valid Debian package before installing
+    if ! dpkg-deb --info /tmp/${ros_apt_source_pkg_name}.deb > /dev/null 2>&1
+    then
+        echo "Downloaded package is not a valid .deb file. Aborting." >&2
+        exit 1
+    fi
+    sudo dpkg -i /tmp/${ros_apt_source_pkg_name}.deb
+    rm -f /tmp/emc_apt_get_updated
 
     # Install basic ROS packages. All other packages will be installed using tue-rosdep
-    if [ "$EMC_ROS_DISTRO" != kinetic ] && [ "$EMC_ROS_DISTRO" != melodic ]
-    then
-        pv=3
-    fi
-    sudo apt-get install -y ros-"$EMC_ROS_DISTRO"-ros-base cmake python${pv}-catkin-pkg python${pv}-empy python${pv}-nose python${pv}-rosdep python${pv}-setuptools libgtest-dev build-essential
+    _make_sure_installed ros-"${EMC_ROS_DISTRO}"-ros-base cmake python3-catkin-pkg python3-empy python3-nose python3-rosdep python3-setuptools libgtest-dev build-essential
 
-    if [ ! -d /etc/ros/rosdep ]
+    if [[ ! -d /etc/ros/rosdep ]]
     then
         sudo rosdep init || true # make sure it always succeeds, even if rosdep init was already called
     fi
@@ -133,10 +162,10 @@ _make_sure_installed python3-catkin-tools libassimp-dev ros-"${EMC_ROS_DISTRO}"-
 # 4) Compile
 if [[ -n "$CI" ]]
 then
-	# suppress status bar in CI
-	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF --no-status
+    # suppress status bar in CI
+    catkin build --workspace "${EMC_SYSTEM_DIR}" -DCATKIN_ENABLE_TESTING=OFF --no-status
 else
-	catkin build --workspace "$EMC_SYSTEM_DIR" -DCATKIN_ENABLE_TESTING=OFF
+    catkin build --workspace "${EMC_SYSTEM_DIR}" -DCATKIN_ENABLE_TESTING=OFF
 fi
 
 # 5) Install the libraries
