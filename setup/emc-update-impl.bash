@@ -89,6 +89,8 @@ then
     source /etc/os-release  # Get the UBUNTU_CODENAME
 
    # Check whether universe is enabled
+   # The following regex checks for a 'deb' line in /etc/apt/sources.list that matches the current Ubuntu codename
+   # and includes the 'universe' component. It handles possible variations in the line format.
    if ! grep -h ^deb /etc/apt/sources.list 2>/dev/null | grep -P "${UBUNTU_CODENAME}[a-z\-]* (?:[a-z ]*(?:[a-z]+(?: [a-z]+)*)) universe" -q
    then
        sudo add-apt-repository universe
@@ -102,10 +104,16 @@ then
     fi
     newest_version=$(curl "${CURL_ARGS[@]}" -sL https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -m1 '"tag_name":' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')
     
-    [[ ${newest_version} != "null" ]] || (exit 1)
+    [[ ${newest_version} != "null" ]] || { echo "Failed to retrieve latest ros-apt-source version" >&2; exit 1; }
 
     ros_apt_source_pkg_name="ros-apt-source"
-    curl -L -o /tmp/${ros_apt_source_pkg_name}.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${newest_version}/${ros_apt_source_pkg_name}_${newest_version}.${UBUNTU_CODENAME}_all.deb"
+    curl -fL -o /tmp/${ros_apt_source_pkg_name}.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${newest_version}/${ros_apt_source_pkg_name}_${newest_version}.${UBUNTU_CODENAME}_all.deb"
+    # Verify the downloaded .deb file is a valid Debian package before installing
+    if ! dpkg-deb --info /tmp/${ros_apt_source_pkg_name}.deb > /dev/null 2>&1
+    then
+        echo "Downloaded package is not a valid .deb file. Aborting." >&2
+        exit 1
+    fi
     sudo dpkg -i /tmp/${ros_apt_source_pkg_name}.deb
     rm -f /tmp/emc_apt_get_updated
 
