@@ -67,11 +67,22 @@ function _git_clone_or_update
 {
     local repo_url=$1
     local dest=$2
+    local branch=$3
 
     if [ ! -d "$dest" ]
     then
-        git clone "$repo_url" "$dest"
+        if [ -n "$branch" ]
+        then
+            git clone --branch "$branch" "$repo_url" "$dest"
+        else
+            git clone "$repo_url" "$dest"
+        fi
     else
+        if [ -n "$branch" ]
+        then
+            git -C "$dest" fetch
+            git -C "$dest" checkout "$branch"
+        fi
         git -C "$dest" pull
     fi
 }
@@ -146,8 +157,8 @@ fi
 _git_clone_or_update https://github.com/tue-robotics/emc_system "$EMC_SYSTEM_DIR"/src/emc_system
 _git_clone_or_update https://github.com/tue-robotics/catkin_lint_cmake "$EMC_SYSTEM_DIR"/src/catkin_lint_cmake
 _git_clone_or_update https://github.com/tue-robotics/emc_simulator "$EMC_SYSTEM_DIR"/src/emc_simulator
-_git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2
-_git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler
+_git_clone_or_update https://github.com/tue-robotics/geolib2 "$EMC_SYSTEM_DIR"/src/geolib2 ros1
+_git_clone_or_update https://github.com/tue-robotics/code_profiler "$EMC_SYSTEM_DIR"/src/code_profiler ros1
 _git_clone_or_update https://github.com/husarion/rosbot_description.git "$EMC_SYSTEM_DIR"/src/rosbot_description
 
 if [ "$ROBOT_REAL" != true ]
