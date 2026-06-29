@@ -67,11 +67,22 @@ function _git_clone_or_update
 {
     local repo_url=$1
     local dest=$2
+    local branch=$3
 
     if [ ! -d "$dest" ]
     then
-        git clone "$repo_url" "$dest"
+        if [ -n "$branch" ]
+        then
+            git clone --branch "$branch" "$repo_url" "$dest"
+        else
+            git clone "$repo_url" "$dest"
+        fi
     else
+        if [ -n "$branch" ]
+        then
+            git -C "$dest" fetch
+            git -C "$dest" checkout "$branch"
+        fi
         git -C "$dest" pull
     fi
 }
